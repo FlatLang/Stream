@@ -7,8 +7,7 @@ import flat/io/FancyOutputStream
 import flat/stream/Stream
 
 [TestSuite [
-  Stream_Test,
-  TypedStream_Test
+  Stream_Test
 ]]
 class {
   public static async main(String args[]) {
