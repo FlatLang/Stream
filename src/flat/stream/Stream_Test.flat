@@ -1,7 +1,5 @@
 package flat/stream
 
-import flat/stream/Stream
-
 testable class {
   async test `can send event to nobody`() {
     let stream = Stream()
