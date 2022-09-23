@@ -4,12 +4,27 @@ import flat/datastruct/HashMap
 
 class {
   HashMap<String, Array<async action(Object)>> eventListeners = HashMap()
+  HashMap<String, Array<Object>> eventBacklog = HashMap()
+
+  public construct(
+    visible Bool backlogMissedEvents = false
+  ) {}
 
   public async emit<DataType>(String eventType, DataType data) => this {
-    eventListeners.getOrDefault(eventType, { Array() }).forEachParallel({ _(data) })
+    let listeners = eventListeners.getOrDefault(eventType, { Array() })
+
+    if (listeners.isNotEmpty) {
+      listeners.forEachParallel({ _(data) })
+    } else if (backlogMissedEvents) {
+      eventBacklog.getOrDefault(eventType, { Array() }).add(data)
+    }
   }
 
-  public on<DataType>(String eventType, async action(DataType)) => this {
+  public async on<DataType>(String eventType, async action(DataType)) => this {
     eventListeners.getOrDefault(eventType, { Array() }).add(action)
+
+    if (backlogMissedEvents) {
+      eventBacklog.getAndRemove(eventType)?.forEachAsync({ action(_) })
+    }
   }
 }
