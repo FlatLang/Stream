@@ -1,5 +1,15 @@
 package flat/stream
 
-class {
+import flat/datastruct/HashMap
 
+class {
+  HashMap<String, Array<async action(Object)>> eventListeners = HashMap()
+
+  public async emit<DataType>(String eventType, DataType data) => this {
+    eventListeners.getOrDefault(eventType, { Array() }).forEachParallel({ _(data) })
+  }
+
+  public on<DataType>(String eventType, async action(DataType)) => this {
+    eventListeners.getOrDefault(eventType, { Array() }).add(action)
+  }
 }
