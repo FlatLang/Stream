@@ -14,7 +14,8 @@
       "dependencies": {
         "github:FlatLang/System": "master",
         "github:FlatLang/IO": "master",
-        "github:FlatLang/Datastruct": "master"
+        "github:FlatLang/Datastruct": "master",
+        "github:FlatLang/Logger": "master"
       }
     },
     "test": {

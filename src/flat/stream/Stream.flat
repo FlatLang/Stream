@@ -1,8 +1,11 @@
 package flat/stream
 
 import flat/datastruct/HashMap
+import flat/log/Logger
 
 class {
+  let static Logger log = Logger(Stream.class)
+
   HashMap<String, Array<async action(Object)>> eventListeners = HashMap()
   HashMap<String, Array<Object>> eventBacklog = HashMap()
 
