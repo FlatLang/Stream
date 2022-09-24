@@ -9,6 +9,8 @@ class {
   HashMap<String, Array<async action(Object)>> eventListeners = HashMap()
   HashMap<String, Array<Object>> eventBacklog = HashMap()
 
+  visible Bool backlogEvents = true
+
   public construct(
     visible Bool backlogMissedEvents = false
   ) {}
@@ -18,7 +20,8 @@ class {
 
     if (listeners.isNotEmpty) {
       listeners.forEachParallel({ _(data) })
-    } else if (backlogMissedEvents) {
+    }
+    if (backlogEvents) {
       eventBacklog.getOrDefault(eventType, { Array() }).add(data)
     }
   }
@@ -27,7 +30,7 @@ class {
     eventListeners.getOrDefault(eventType, { Array() }).add(action)
 
     if (backlogMissedEvents) {
-      eventBacklog.getAndRemove(eventType)?.forEachAsync({ action(_) })
+      eventBacklog.get(eventType)?.forEachAsync({ action(_) })
     }
   }
 
