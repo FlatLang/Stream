@@ -34,7 +34,7 @@ class {
     }
   }
 
-  public async consumeAll<DataType>(String eventType, String closedEvent = "close") -> DataType[] {
+  public async waitFor<DataType>(String eventType) -> DataType {
     external {
       let resolve;
       let reject;
@@ -45,20 +45,26 @@ class {
       });
     }
 
-    let results = Array<DataType>()
-
     on(eventType, (data) => {
-      results.add(data)
-    })
-
-    on(closedEvent, {
       external {
-        resolve(#{results});
+        resolve(#{data});
       }
     })$
 
     external {
       return promise;
     }
+  }
+
+  public async consumeAll<DataType>(String eventType, String closeEvent = "close") -> DataType[] {
+    let results = Array<DataType>()
+
+    on(eventType, (data) => {
+      results.add(data)
+    })
+
+    waitFor(closeEvent)
+
+    return results
   }
 }
