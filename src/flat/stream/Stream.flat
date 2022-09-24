@@ -27,4 +27,32 @@ class {
       eventBacklog.getAndRemove(eventType)?.forEachAsync({ action(_) })
     }
   }
+
+  public async consumeAll<DataType>(String eventType, String closedEvent = "close") -> DataType[] {
+    external {
+      let resolve;
+      let reject;
+
+      const promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+    }
+
+    let results = Array<DataType>()
+
+    on(eventType, (data) => {
+      results.add(data)
+    })
+
+    on(closedEvent, {
+      external {
+        resolve(#{results});
+      }
+    })$
+
+    external {
+      return promise;
+    }
+  }
 }
