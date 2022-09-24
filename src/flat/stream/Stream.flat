@@ -10,7 +10,7 @@ class {
     visible Bool backlogMissedEvents = false
   ) {}
 
-  public async emit<DataType>(String eventType, DataType data) => this {
+  public async emit<DataType>(String eventType, DataType data = null) => this {
     let listeners = eventListeners.getOrDefault(eventType, { Array() })
 
     if (listeners.isNotEmpty) {
