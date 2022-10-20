@@ -10,12 +10,15 @@ class {
   HashMap<String, Array<Object>> eventBacklog = HashMap()
 
   visible Bool backlogEvents = true
+  visible var Bool closed = false
 
   public construct(
     visible Bool backlogMissedEvents = false
   ) {}
 
   public async emit<DataType>(String eventType, DataType data = null) => this {
+    if (closed) return this
+
     let listeners = eventListeners.getOrDefault(eventType, { Array() })
 
     if (listeners.isNotEmpty) {
@@ -27,6 +30,8 @@ class {
   }
 
   public async on<DataType>(String eventType, async action(DataType)) => this {
+    if (closed) return this
+
     eventListeners.getOrDefault(eventType, { Array() }).add(action)
 
     if (backlogMissedEvents) {
@@ -34,7 +39,13 @@ class {
     }
   }
 
+  public close() {
+    closed = true
+  }
+
   public async waitFor<DataType>(String eventType) -> DataType {
+    if (closed) return null
+
     external {
       let resolve;
       let reject;
@@ -57,6 +68,8 @@ class {
   }
 
   public async consumeAll<DataType>(String eventType, String closeEvent = "close") -> DataType[] {
+    if (closed) return DataType[]
+
     let results = Array<DataType>()
 
     on(eventType, (data) => {
