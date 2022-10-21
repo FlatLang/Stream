@@ -1,7 +1,7 @@
 package flat/stream
 
 testable class {
-  async test `can send event to nobody`() {
+  test `can send event to nobody`() {
     let stream = Stream()
 
     stream.emit("test", "I love you")
@@ -9,7 +9,7 @@ testable class {
     expect(stream).toNotBe(null)
   }
 
-  async test `can send event and receive it`() {
+  test `can send event and receive it`() {
     let stream = Stream()
 
     var triggered = false
@@ -23,7 +23,7 @@ testable class {
     expect(triggered).toBe(true)
   }
 
-  async test `doesnt receive events in non-existant channel`() {
+  test `doesnt receive events in non-existant channel`() {
     let stream = Stream()
 
     var triggered = false
@@ -37,7 +37,7 @@ testable class {
     expect(triggered).toBe(false)
   }
 
-  async test `doesnt receive events in wrong channel`() {
+  test `doesnt receive events in wrong channel`() {
     let stream = Stream()
 
     var testTriggered = false

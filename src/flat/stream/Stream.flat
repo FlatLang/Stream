@@ -6,7 +6,7 @@ import flat/log/Logger
 class {
   static Logger log = Logger(Stream.class)
 
-  HashMap<String, Array<async action(Object)>> eventListeners = HashMap()
+  HashMap<String, Array<action(Object, Stream)>> eventListeners = HashMap()
   HashMap<String, Array<Object>> eventBacklog = HashMap()
 
   visible Bool backlogEvents = true
@@ -16,26 +16,25 @@ class {
     visible Bool backlogMissedEvents = false
   ) {}
 
-  public async emit<DataType>(String eventType, DataType data = null) => this {
+  public emit<DataType>(String eventType, DataType data = null) => this {
     if (closed) return this
 
-    let listeners = eventListeners.getOrDefault(eventType, { Array() })
-
-    if (listeners.isNotEmpty) {
-      listeners.forEachParallel({ _(data) })
-    }
     if (backlogEvents) {
       eventBacklog.getOrDefault(eventType, { Array() }).add(data)
     }
+
+    if (let listeners = eventListeners.get(eventType)) {
+      listeners.forEach({ _(data, this) })
+    }
   }
 
-  public async on<DataType>(String eventType, async action(DataType)) => this {
+  public on<DataType>(String eventType, action(DataType, Stream)) => this {
     if (closed) return this
 
     eventListeners.getOrDefault(eventType, { Array() }).add(action)
 
     if (backlogMissedEvents) {
-      eventBacklog.get(eventType)?.forEachAsync({ action(_) })
+      eventBacklog.get(eventType)?.forEach({ action(_, this) })
     }
   }
 
@@ -51,18 +50,24 @@ class {
       const promise = new Promise((res, rej) => {
         resolve = res;
         reject = rej;
-
-        if (#{closed}) {
-          resolve(#{null});
-        }
       });
+    }
+
+    if (let event = eventBacklog.get(eventType)?.last) {
+      external {
+        resolve(#{event});
+      }
+    } else if (closed) {
+      external {
+        resolve(#{null});
+      }
     }
 
     on(eventType, (data) => {
       external {
         resolve(#{data});
       }
-    })$
+    })
 
     external {
       return promise;
