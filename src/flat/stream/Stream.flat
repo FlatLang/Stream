@@ -44,8 +44,6 @@ class {
   }
 
   public async waitFor<DataType>(String eventType) -> DataType {
-    if (closed) return null
-
     external {
       let resolve;
       let reject;
@@ -53,6 +51,10 @@ class {
       const promise = new Promise((res, rej) => {
         resolve = res;
         reject = rej;
+
+        if (#{closed}) {
+          resolve(#{null});
+        }
       });
     }
 
