@@ -1,90 +1,37 @@
 package flat/stream
 
-import flat/datastruct/HashMap
+import flat/datastruct
+import flat/datastruct/list
 import flat/log/Logger
 
-class {
+class Stream<Type> {
   static Logger log = Logger(Stream.class)
 
-  HashMap<String, Array<action(Object, Stream)>> eventListeners = HashMap()
-  HashMap<String, Array<Object>> eventBacklog = HashMap()
+  public construct(visible Iterator<Type> iterator) {}
 
-  visible Bool backlogEvents = true
-  visible var Bool closed = false
-
-  public construct(
-    visible Bool backlogMissedEvents = false
-  ) {}
-
-  public emit<DataType>(String eventType, DataType data = null) => this {
-    if (closed) return this
-
-    if (backlogEvents) {
-      eventBacklog.getOrDefault(eventType, { Array() }).add(data)
-    }
-
-    if (let listeners = eventListeners.get(eventType)) {
-      listeners.forEach({ _(data, this) })
-    }
+  public map<Out>(mapFunc(Type) -> Out) -> Stream<Out> {
+    return StreamMap(iterator, mapFunc)
   }
 
-  public on<DataType>(String eventType, action(DataType, Stream)) => this {
-    if (closed) return this
-
-    eventListeners.getOrDefault(eventType, { Array() }).add(action)
-
-    if (backlogMissedEvents) {
-      eventBacklog.get(eventType)?.forEach({ action(_, this) })
-    }
+  public mapNotNull<Out>(mapFunc(Type) -> Out) -> Stream<Out> {
+    return StreamMap(iterator, mapFunc).filter({ _ != null })
   }
 
-  public close() {
-    closed = true
+  public flatMap<Out>(mapFunc(Type) -> Stream<Out>) -> Stream<Out> {
+    return StreamFlatMap(iterator, mapFunc)
   }
 
-  public async waitFor<DataType>(String eventType) -> DataType {
-    external {
-      let resolve;
-      let reject;
-
-      const promise = new Promise((res, rej) => {
-        resolve = res;
-        reject = rej;
-      });
-    }
-
-    if (let event = eventBacklog.get(eventType)?.last) {
-      external {
-        resolve(#{event});
-      }
-    } else if (closed) {
-      external {
-        resolve(#{null});
-      }
-    }
-
-    on(eventType, (data) => {
-      external {
-        resolve(#{data});
-      }
-    })
-
-    external {
-      return promise;
-    }
+  public filter(filterFunc(Type) -> Bool) -> Stream<Type> {
+    return StreamFilter(iterator, filterFunc)
   }
 
-  public async consumeAll<DataType>(String eventType, String closeEvent = "close") -> DataType[] {
-    if (closed) return DataType[]
+  public toArray() -> Type[] {
+    let array = Type[]
 
-    let results = Array<DataType>()
+    for (value in iterator) {
+      array.add(value)
+    }
 
-    on(eventType, (data) => {
-      results.add(data)
-    })
-
-    waitFor(closeEvent)
-
-    return results
+    return array
   }
 }

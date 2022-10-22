@@ -1,57 +1,13 @@
 package flat/stream
 
-testable class {
-  test `can send event to nobody`() {
-    let stream = Stream()
+import flat/datastruct
+import flat/datastruct/list
 
-    stream.emit("test", "I love you")
+testable class {
+  test `can create a Stream from an Iterator`() {
+    let array = ["test", "one", "two", "three"]
+    let stream = Stream(array.iterator)
 
     expect(stream).toNotBe(null)
-  }
-
-  test `can send event and receive it`() {
-    let stream = Stream()
-
-    var triggered = false
-
-    stream.on("test", { triggered = true })
-
-    expect(triggered).toBe(false)
-
-    stream.emit("test", "I love you")
-
-    expect(triggered).toBe(true)
-  }
-
-  test `doesnt receive events in non-existant channel`() {
-    let stream = Stream()
-
-    var triggered = false
-
-    stream.on("test", { triggered = true })
-
-    expect(triggered).toBe(false)
-
-    stream.emit("testy", "I love you")
-
-    expect(triggered).toBe(false)
-  }
-
-  test `doesnt receive events in wrong channel`() {
-    let stream = Stream()
-
-    var testTriggered = false
-    var testyTriggered = false
-
-    stream.on("test", { testTriggered = true })
-    stream.on("testy", { testyTriggered = true })
-
-    expect(testTriggered).toBe(false)
-    expect(testyTriggered).toBe(false)
-
-    stream.emit("test", "I love you")
-
-    expect(testTriggered).toBe(true)
-    expect(testyTriggered).toBe(false)
   }
 }

@@ -1,0 +1,146 @@
+package flat/stream
+
+import flat/stream/StreamListExtensions
+
+testable class {
+  test `can convert array to stream`() {
+    let array = ["one", "two", "three"]
+
+    let stream = array.stream()
+
+    expect(stream).toNotBe(null)
+  }
+
+  test `can filter objects`() {
+    let array = ["one", "two", "three", "333", "222", "five", "six"]
+
+    let result = array.stream<String>()
+      .filter({ _.count == 3 })
+      .toArray()
+
+    expect(result).toBe([
+      "one",
+      "two",
+      "333",
+      "222",
+      "six",
+    ])
+  }
+
+  test `can map then filter objects`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+
+    let result = array.stream<String>()
+      .map({ _ + "!" })
+      .filter({ _.count == 3 })
+      .toArray()
+
+    expect(result).toBe([
+      "to!",
+      "th!",
+      "22!",
+    ])
+  }
+
+  test `can mapNotNull objects`() {
+    let array = ["one", null, "th", null, "22", "five", "six"]
+
+    let result = array.stream<String>()
+      .mapNotNull({ _ ? _ + "!" : null })
+      .toArray()
+
+    expect(result).toBe([
+      "one!",
+      "th!",
+      "22!",
+      "five!",
+      "six!",
+    ])
+  }
+
+  test `iterates through objects sequentially`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+
+    let actions = String[]
+
+    let result = array.stream<String>()
+      .map((x) => {
+        actions.add("mapped #x")
+        return x + "!"
+      })
+      .filter((x) => {
+        actions.add("filtered #x")
+        return x.count == 3
+      })
+      .map((x) => {
+        actions.add("mapped2 #x")
+        return x + "!!"
+      })
+      .toArray()
+
+    expect(actions).toBe([
+      "mapped one",
+      "filtered one!",
+      "mapped to",
+      "filtered to!",
+      "mapped2 to!",
+      "mapped th",
+      "filtered th!",
+      "mapped2 th!",
+      "mapped 333",
+      "filtered 333!",
+      "mapped 22",
+      "filtered 22!",
+      "mapped2 22!",
+      "mapped five",
+      "filtered five!",
+      "mapped six",
+      "filtered six!",
+    ])
+  }
+
+  test `can flatMap objects`() {
+    let array = ["one", "two"]
+
+    let result = array.stream<Array<String>>()
+      .flatMap((x) => { return Array():addAll([x, x, x]).stream() })
+      .toArray()
+
+    expect(result).toBe([
+      "one",
+      "one",
+      "one",
+      "two",
+      "two",
+      "two",
+    ])
+  }
+
+  test `iterates through flatMap objects sequentially`() {
+    let array = ["one", "two"]
+
+    let actions = String[]
+
+    array.stream<Array<String>>()
+      .flatMap((x) => {
+        actions.add("flatMapped #x")
+        return Array():addAll([x, x, x]).stream()
+      })
+      .map((x) => {
+        actions.add("mapped #x")
+        return x
+      })
+      .toArray()
+
+    expect(actions).toBe([
+      "flatMapped one",
+      "mapped one",
+      "mapped one",
+      "mapped one",
+      "flatMapped two",
+      "mapped two",
+      "mapped two",
+      "mapped two",
+    ])
+  }
+}
