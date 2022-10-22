@@ -1,6 +1,6 @@
 package flat/stream
 
-extension StreamListExtensions {
+extension class {
   public stream<Out>(List<Out> this) -> Stream<Out> {
     return Stream(iterator)
   }
