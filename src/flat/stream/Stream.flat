@@ -25,6 +25,14 @@ class<Type> {
     return StreamFilter(iterator, filterFunc)
   }
 
+  public firstWhere(func(Type) -> Bool) -> Type => null {
+    let it = StreamFirstWhere(iterator, func).iterator
+
+    if (it.hasNext) {
+      return it.stepNext
+    }
+  }
+
   public toArray() -> Type[] {
     let array = Type[]
 

@@ -143,4 +143,23 @@ testable class {
       "mapped two",
     ])
   }
+
+  test `can find firstWhere in objects`() {
+    let array = ["one", "two", "three", "333", "222", "five", "six"]
+
+    let result = array.stream<String>()
+      .firstWhere({ _[0] == 't' })
+
+    expect(result).toBe("two")
+  }
+
+  test `can find firstWhere after filter in objects`() {
+    let array = ["one", "two", "three", "333", "222", "five", "six"]
+
+    let result = array.stream<String>()
+      .filter({ _.count > 3 })
+      .firstWhere({ _[0] == 't' })
+
+    expect(result).toBe("three")
+  }
 }
