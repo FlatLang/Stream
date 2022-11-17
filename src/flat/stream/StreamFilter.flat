@@ -2,7 +2,7 @@ package flat/stream
 
 import flat/datastruct/list
 
-class StreamFilter<Type> extends Stream<Type> {
+class<Type> extends Stream<Type> {
   public construct(Iterator<Type> iterator, filterFunc(Type) -> Bool) {
     super(FilterIterator<Type>(iterator, filterFunc))
   }

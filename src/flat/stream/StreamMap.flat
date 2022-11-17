@@ -2,7 +2,7 @@ package flat/stream
 
 import flat/datastruct/list
 
-class StreamMap<In, Out> extends Stream<Out> {
+class<In, Out> extends Stream<Out> {
   public construct(Iterator<In> iterator, mapFunc(In) -> Stream<Out>) {
     super(MapIterator<In, Out>(iterator, mapFunc))
   }

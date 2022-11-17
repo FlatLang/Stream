@@ -4,7 +4,7 @@ import flat/datastruct
 import flat/datastruct/list
 import flat/log/Logger
 
-class Stream<Type> {
+class<Type> {
   static Logger log = Logger(Stream.class)
 
   public construct(visible Iterator<Type> iterator) {}

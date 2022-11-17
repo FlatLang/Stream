@@ -2,7 +2,7 @@ package flat/stream
 
 import flat/datastruct/list
 
-class StreamIterator<Type> implements Iterator<Type> {
+class<Type> implements Iterator<Type> {
   construct(visible Iterator<Type> iterator) {}
 
   override visible Bool hasNext => iterator.hasNext
