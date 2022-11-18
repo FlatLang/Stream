@@ -103,7 +103,7 @@ testable class {
     let array = ["one", "two"]
 
     let result = array.stream()
-      .flatMap((x) => { return Array():addAll([x, x, x]).stream() })
+      .flatMap(x => Array():addAll([x, x, x]).stream())
       .toArray()
 
     expect(result).toBe([
