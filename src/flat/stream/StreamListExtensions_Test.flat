@@ -14,7 +14,7 @@ testable class {
   test `can filter objects`() {
     let array = ["one", "two", "three", "333", "222", "five", "six"]
 
-    let result = array.stream<String>()
+    let result = array.stream()
       .filter({ _.count == 3 })
       .toArray()
 
@@ -30,7 +30,7 @@ testable class {
   test `can map then filter objects`() {
     let array = ["one", "to", "th", "333", "22", "five", "six"]
 
-    let result = array.stream<String>()
+    let result = array.stream()
       .map({ _ + "!" })
       .filter({ _.count == 3 })
       .toArray()
@@ -45,7 +45,7 @@ testable class {
   test `can mapNotNull objects`() {
     let array = ["one", null, "th", null, "22", "five", "six"]
 
-    let result = array.stream<String>()
+    let result = array.stream()
       .mapNotNull({ _ ? _ + "!" : null })
       .toArray()
 
@@ -63,7 +63,7 @@ testable class {
 
     let actions = String[]
 
-    let result = array.stream<String>()
+    let result = array.stream()
       .map((x) => {
         actions.add("mapped #x")
         return x + "!"
@@ -102,7 +102,7 @@ testable class {
   test `can flatMap objects`() {
     let array = ["one", "two"]
 
-    let result = array.stream<Array<String>>()
+    let result = array.stream()
       .flatMap((x) => { return Array():addAll([x, x, x]).stream() })
       .toArray()
 
@@ -121,7 +121,7 @@ testable class {
 
     let actions = String[]
 
-    array.stream<Array<String>>()
+    array.stream<Array>()
       .flatMap((x) => {
         actions.add("flatMapped #x")
         return Array():addAll([x, x, x]).stream()
@@ -147,7 +147,7 @@ testable class {
   test `can find firstWhere in objects`() {
     let array = ["one", "two", "three", "333", "222", "five", "six"]
 
-    let result = array.stream<String>()
+    let result = array.stream()
       .firstWhere({ _[0] == 't' })
 
     expect(result).toBe("two")
@@ -156,7 +156,7 @@ testable class {
   test `can find firstWhere after filter in objects`() {
     let array = ["one", "two", "three", "333", "222", "five", "six"]
 
-    let result = array.stream<String>()
+    let result = array.stream()
       .filter({ _.count > 3 })
       .firstWhere({ _[0] == 't' })
 
