@@ -162,4 +162,27 @@ testable class {
 
     expect(result).toBe("three")
   }
+
+  test `can skip elements`() {
+    let array = ["one", "two", "three"]
+
+    expect(array.stream().skip(1).toArray()).toBe(["two", "three"])
+  }
+
+  test `can get first`() {
+    let array = ["one", "two", "three"]
+
+    expect(array.stream().first).toBe("one")
+    expect(array.stream().skip(1).first).toBe("two")
+  }
+
+  test `can get first non null`() {
+    let array = [null, null, "three"]
+
+    expect(array.stream().firstNonNull).toBe("three")
+
+    let nullArray = [null, null, null]
+
+    expect(nullArray.stream().firstNonNull).toBe(null)
+  }
 }

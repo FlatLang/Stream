@@ -1,0 +1,30 @@
+package flat/stream
+
+import flat/datastruct/list
+
+class<Type> extends Stream<Type> {
+  public construct(Iterator<Type> iterator, Int count) {
+    super(SkipIterator<Type>(iterator, count))
+  }
+
+  class SkipIterator<T> extends StreamIterator<T> {
+    private var Int position = 0
+
+    public construct(Iterator<T> iterator, private Int count) => super(iterator) {
+    }
+
+    visible Bool hasNext {
+      get {
+        while (position < count && iterator.hasNext) {
+          position++
+          iterator.stepNext
+        }
+
+        return iterator.hasNext
+      }
+    }
+    override visible Type stepNext => iterator.stepNext
+    override visible Type next => iterator.next
+    override visible Type current => iterator.current
+  }
+}
