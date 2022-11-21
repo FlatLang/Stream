@@ -22,6 +22,8 @@ class<Type> {
 
   public skip(Int count) => StreamSkip<Type>(iterator, count)
 
+  public take(Int count) => StreamTake<Type>(iterator, count)
+
   public firstWhere(func(Type) -> Bool) -> Type => StreamFirstWhere(iterator, func).first
 
   public toArray() -> Type[] {
