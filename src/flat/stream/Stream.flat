@@ -29,6 +29,9 @@ class<Type> {
   public mapNotNull<Out>(mapFunc(Type) -> Out) =>
     map(mapFunc).filter({ _ != null })
 
+  public peek(func(Type)) =>
+    Stream<Out>(PeekIterator<Type, Out>(iterator, func))
+
   public flatMap<Out>(mapFunc(Type) -> Stream<Out>) =>
     Stream<Out>(FlatMapIterator<Type, Out>(iterator, mapFunc))
 

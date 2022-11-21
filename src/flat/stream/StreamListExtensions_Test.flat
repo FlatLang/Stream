@@ -271,4 +271,32 @@ testable class {
       "six!",
     ])
   }
+
+  test `can peek at objects`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+    let result = Array()
+
+    let stream = array.stream()
+      .peek({ result.add(_) })
+
+    expect(result).toBe(Array())
+
+    stream
+      .filter({ _.count == 2 })
+      .peek({ result.add(_) })
+
+    expect(result).toBe(Array())
+
+    stream.toArray()
+
+    expect(result).toBe([
+      "one",
+      "to",
+      "th",
+      "333",
+      "22",
+      "five",
+      "six",
+    ])
+  }
 }

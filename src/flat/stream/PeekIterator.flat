@@ -1,0 +1,22 @@
+package flat/stream
+
+import flat/datastruct/list
+
+class<Type> extends StreamIterator<Type> {
+  Array<filterFunc(Type) -> Bool> funcs = Array()
+
+  public construct(Iterator<Type> iterator, func(Type) -> Bool) => super(iterator) {
+    funcs.add(func)
+  }
+
+  override visible Bool hasNext => iterator.hasNext
+  visible Type stepNext {
+    get {
+      let value = iterator.stepNext
+      funcs.forEach({ _(value) })
+      return value
+    }
+  }
+  override visible Type next => iterator.next
+  override visible Type current => iterator.current
+}
