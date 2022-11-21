@@ -17,6 +17,12 @@ testable class {
     expect(array.stream().toSet()).toBe(HashSet(array))
   }
 
+  test `can collect to set without duplicates`() {
+    let array = ["one", "two", "two", "three", "one"]
+
+    expect(array.stream().toSet()).toBe(HashSet(["one", "three", "two"]))
+  }
+
   test `can filter objects`() {
     let array = ["one", "two", "three", "333", "222", "five", "six"]
 
