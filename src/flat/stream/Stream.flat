@@ -12,19 +12,26 @@ class<Type> {
 
   public construct(visible Iterator<Type> iterator) {}
 
-  public map<Out>(mapFunc(Type) -> Out) => StreamMap<Out>(iterator, mapFunc)
+  public map<Out>(mapFunc(Type) -> Out) =>
+    Stream<Out>(MapIterator<Type, Out>(iterator, mapFunc))
 
-  public mapNotNull<Out>(mapFunc(Type) -> Out) => StreamMap<Out>(iterator, mapFunc).filter({ _ != null })
+  public mapNotNull<Out>(mapFunc(Type) -> Out) =>
+    map(mapFunc).filter({ _ != null })
 
-  public flatMap<Out>(mapFunc(Type) -> Stream<Out>) => StreamFlatMap<Out>(iterator, mapFunc)
+  public flatMap<Out>(mapFunc(Type) -> Stream<Out>) =>
+    Stream<Out>(FlatMapIterator<Type, Out>(iterator, mapFunc))
 
-  public filter(filterFunc(Type) -> Bool) => StreamFilter<Type>(iterator, filterFunc)
+  public filter(filterFunc(Type) -> Bool) =>
+    Stream<Type>(FilterIterator<Type>(iterator, filterFunc))
 
-  public skip(Int count) => StreamSkip<Type>(iterator, count)
+  public skip(Int count) =>
+    Stream<Type>(SkipIterator<Type>(iterator, count))
 
-  public take(Int count) => StreamTake<Type>(iterator, count)
+  public take(Int count) =>
+    Stream<Type>(TakeIterator<Type>(iterator, count))
 
-  public firstWhere(func(Type) -> Bool) -> Type => StreamFirstWhere(iterator, func).first
+  public firstWhere(func(Type) -> Bool) -> Type =>
+    filter(func).first
 
   public toArray() -> Type[] {
     let array = Type[]
