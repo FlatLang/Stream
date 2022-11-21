@@ -252,4 +252,23 @@ testable class {
     expect(array.stream().count({ _.count == 3 })).toBe(2)
     expect(array.stream().count({ _.count >= 3 })).toBe(3)
   }
+
+  test `can map then forEach objects`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+    let result = Array()
+
+    array.stream()
+      .map({ _ + "!" })
+      .forEach({ result.add(_) })
+
+    expect(result).toBe([
+      "one!",
+      "to!",
+      "th!",
+      "333!",
+      "22!",
+      "five!",
+      "six!",
+    ])
+  }
 }

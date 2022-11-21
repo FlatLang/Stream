@@ -65,4 +65,10 @@ class<Type> {
 
     return array
   }
+
+  public forEach(func(Type)) {
+    for (value in iterator) {
+      func(value)
+    }
+  }
 }
