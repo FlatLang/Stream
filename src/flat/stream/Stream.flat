@@ -24,6 +24,9 @@ class<Type> {
   public filter(filterFunc(Type) -> Bool) =>
     Stream<Type>(FilterIterator<Type>(iterator, filterFunc))
 
+  public filterNot(filterFunc(Type) -> Bool) =>
+    Stream<Type>(FilterNotIterator<Type>(iterator, filterFunc))
+
   public skip(Int count) =>
     Stream<Type>(SkipIterator<Type>(iterator, count))
 

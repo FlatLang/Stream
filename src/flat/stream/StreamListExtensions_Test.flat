@@ -42,6 +42,35 @@ testable class {
     ])
   }
 
+  test `can filterNot objects`() {
+    let array = ["one", "two", "three", "333", "222", "five", "six"]
+
+    let result = array.stream()
+      .filterNot({ _.count == 3 })
+      .toArray()
+
+    expect(result).toBe([
+      "three",
+      "five",
+    ])
+  }
+
+  test `can map then filterNot objects`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+
+    let result = array.stream()
+      .map({ _ + "!" })
+      .filterNot({ _.count == 3 })
+      .toArray()
+
+    expect(result).toBe([
+      "one!",
+      "333!",
+      "five!",
+      "six!",
+    ])
+  }
+
   test `can mapNotNull objects`() {
     let array = ["one", null, "th", null, "22", "five", "six"]
 
