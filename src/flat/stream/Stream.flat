@@ -9,6 +9,17 @@ class<Type> {
 
   visible Type first => iterator.hasNext ? iterator.stepNext : null
   visible Type firstNonNull => filter({ _ != null }).first
+  visible Int count {
+    get {
+      var Int value = 0
+
+      for (x in iterator) {
+        value++
+      }
+
+      return value
+    }
+  }
 
   public construct(visible Iterator<Type> iterator) {}
 

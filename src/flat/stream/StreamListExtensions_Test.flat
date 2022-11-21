@@ -234,4 +234,13 @@ testable class {
     expect(array.stream().all({ _.count == 3 })).toBe(false)
     expect(array.stream().all({ _.count >= 3 })).toBe(true)
   }
+
+  test `can access count`() {
+    let array = ["one", "two", "three"]
+
+    expect(array.stream().filter({ _ == "two" }).count).toBe(1)
+    expect(array.stream().filter({ _ == "twoo" }).count).toBe(0)
+    expect(array.stream().filter({ _.count == 3 }).count).toBe(2)
+    expect(array.stream().filter({ _.count >= 3 }).count).toBe(3)
+  }
 }
