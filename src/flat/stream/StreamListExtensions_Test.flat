@@ -276,24 +276,31 @@ testable class {
     let array = ["one", "to", "th", "333", "22", "five", "six"]
     let result = Array()
 
-    let stream = array.stream()
+    var stream = array.stream()
       .peek({ result.add(_) })
 
     expect(result).toBe(Array())
 
-    stream
+    stream = stream
       .filter({ _.count == 2 })
       .peek({ result.add(_) })
 
     expect(result).toBe(Array())
 
-    stream.toArray()
+    expect(stream.toArray()).toBe([
+      "to",
+      "th",
+      "22",
+    ])
 
     expect(result).toBe([
       "one",
       "to",
+      "to",
+      "th",
       "th",
       "333",
+      "22",
       "22",
       "five",
       "six",

@@ -9,14 +9,18 @@ class<Type> extends StreamIterator<Type> {
     funcs.add(func)
   }
 
-  override visible Bool hasNext => iterator.hasNext
-  visible Type stepNext {
+  visible Bool hasNext {
     get {
-      let value = iterator.stepNext
-      funcs.forEach({ _(value) })
-      return value
+      if (iterator.hasNext) {
+        funcs.forEach({ _(iterator.next) })
+
+        return true
+      }
+
+      return false
     }
   }
+  override visible Type stepNext => iterator.stepNext
   override visible Type next => iterator.next
   override visible Type current => iterator.current
 }
