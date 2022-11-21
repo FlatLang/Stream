@@ -36,6 +36,9 @@ class<Type> {
   public firstWhere(func(Type) -> Bool) -> Type =>
     filter(func).first
 
+  public any(func(Type) -> Bool) =>
+    filter(func).iterator.hasNext
+
   public toArray() -> Type[] {
     let array = Type[]
 

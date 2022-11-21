@@ -220,4 +220,11 @@ testable class {
 
     expect(nullArray.stream().firstNonNull).toBe(null)
   }
+
+  test `can check any`() {
+    let array = ["one", "two", "three"]
+
+    expect(array.stream().any({ _ == "two" })).toBe(true)
+    expect(array.stream().any({ _ == "twoo" })).toBe(false)
+  }
 }
