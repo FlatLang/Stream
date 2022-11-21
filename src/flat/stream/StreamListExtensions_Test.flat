@@ -11,6 +11,12 @@ testable class {
     expect(stream).toNotBe(null)
   }
 
+  test `can collect to set`() {
+    let array = ["one", "two", "three"]
+
+    expect(array.stream().toSet()).toBe(HashSet(array))
+  }
+
   test `can filter objects`() {
     let array = ["one", "two", "three", "333", "222", "five", "six"]
 

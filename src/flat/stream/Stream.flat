@@ -69,6 +69,16 @@ class<Type> {
     return array
   }
 
+  public toSet() -> HashSet<Type> {
+    let set = HashSet<Type>()
+
+    for (value in iterator) {
+      set.add(value)
+    }
+
+    return set
+  }
+
   public forEach(func(Type)) {
     for (value in iterator) {
       func(value)
