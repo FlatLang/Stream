@@ -326,6 +326,25 @@ testable class {
     ])
   }
 
+  async test `can map then forEachAsync objects`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+    let result = Array()
+
+    array.stream()
+      .map({ _ + "!" })
+      .forEachAsync({ result.add(_) })
+
+    expect(result).toBe([
+      "one!",
+      "to!",
+      "th!",
+      "333!",
+      "22!",
+      "five!",
+      "six!",
+    ])
+  }
+
   test `can peek at objects`() {
     let array = ["one", "to", "th", "333", "22", "five", "six"]
     let result = Array()

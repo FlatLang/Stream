@@ -116,4 +116,10 @@ class<Type> {
   public async forEachParallel(async func(Type), Int maxParallel = -1) {
     Async.all(toArray(), { func(_) }, maxParallel)
   }
+
+  public async forEachAsync(async func(Type)) {
+    for (value in iterator) {
+      func(value)
+    }
+  }
 }
