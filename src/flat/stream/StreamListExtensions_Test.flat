@@ -39,6 +39,21 @@ testable class {
     ])
   }
 
+  test `can get unique objects`() {
+    let array = ["one", "one", "three", "three", "three", "five", "six"]
+
+    let result = array.stream()
+      .unique()
+      .toArray()
+
+    expect(result).toBe([
+      "one",
+      "three",
+      "five",
+      "six",
+    ])
+  }
+
   test `can map then filter objects`() {
     let array = ["one", "to", "th", "333", "22", "five", "six"]
 
