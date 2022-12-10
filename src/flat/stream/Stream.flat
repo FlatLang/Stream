@@ -80,6 +80,9 @@ class<Type> {
   public all(func(Type) -> Bool) =>
     !filterNot(func).iterator.hasNext
 
+  public none(func(Type) -> Bool) =>
+    !filter(func).iterator.hasNext
+
   public count(func(Type) -> Bool) =>
     filter(func).count
 
