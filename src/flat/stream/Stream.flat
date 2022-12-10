@@ -20,6 +20,19 @@ class<Type> {
     }
   }
   visible Type firstNonNull => filter({ _ != null }).first
+  visible Type lastNonNull {
+    get {
+      var Type value
+
+      while (iterator.hasNext) {
+        if (let x = iterator.stepNext) {
+          value = x
+        }
+      }
+
+      return value
+    }
+  }
   visible Int count {
     get {
       var Int value = 0

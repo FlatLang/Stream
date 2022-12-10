@@ -239,6 +239,16 @@ testable class {
     expect(nullArray.stream().firstNonNull).toBe(null)
   }
 
+  test `can get last non null`() {
+    let array = [null, "one", "three", null, null]
+
+    expect(array.stream().lastNonNull).toBe("three")
+
+    let nullArray = [null, null, null]
+
+    expect(nullArray.stream().lastNonNull).toBe(null)
+  }
+
   test `can check any`() {
     let array = ["one", "two", "three"]
 
