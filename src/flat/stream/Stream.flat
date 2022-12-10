@@ -8,6 +8,17 @@ class<Type> {
   static Logger log = Logger(Stream.class)
 
   visible Type first => iterator.hasNext ? iterator.stepNext : null
+  visible Type last {
+    get {
+      var Type value
+
+      while (iterator.hasNext) {
+        value = iterator.stepNext
+      }
+
+      return value
+    }
+  }
   visible Type firstNonNull => filter({ _ != null }).first
   visible Int count {
     get {
