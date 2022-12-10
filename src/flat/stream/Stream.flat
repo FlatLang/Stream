@@ -1,5 +1,6 @@
 package flat/stream
 
+import flat/async/Async
 import flat/datastruct
 import flat/datastruct/list
 import flat/log/Logger
@@ -110,5 +111,9 @@ class<Type> {
     for (value in iterator) {
       func(value)
     }
+  }
+
+  public async forEachParallel(async func(Type), Int maxParallel = -1) {
+    Async.all(toArray(), { func(_) }, maxParallel)
   }
 }
