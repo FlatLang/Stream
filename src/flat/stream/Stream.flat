@@ -135,4 +135,14 @@ class<Type> {
 
     return min
   }
+
+  public max(func(Type) -> Long) -> Long {
+    var Long max = Long.MIN_VALUE
+
+    for (value in iterator) {
+      max = Math.max(max, func(value))
+    }
+
+    return max
+  }
 }
