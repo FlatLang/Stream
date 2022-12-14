@@ -58,7 +58,7 @@ testable class {
     let array = ["one", "one", "three", "three", "three", "five", "six"]
 
     let result = array.stream()
-      .min({ _.count })
+      .minBy({ _.count })
 
     expect(result).toBe(3)
   }

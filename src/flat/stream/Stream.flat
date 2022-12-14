@@ -126,7 +126,7 @@ class<Type> {
     }
   }
 
-  public min(func(Type) -> Long) -> Long {
+  public minBy(func(Type) -> Long) -> Long {
     var Long min = Long.MAX_VALUE
 
     for (value in iterator) {
