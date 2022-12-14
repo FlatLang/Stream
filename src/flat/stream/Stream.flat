@@ -145,4 +145,14 @@ class<Type> {
 
     return max
   }
+
+  public sumBy(func(Type) -> Long) -> Long {
+    var Long sum = 0
+
+    for (value in iterator) {
+      sum += func(value)
+    }
+
+    return sum
+  }
 }
