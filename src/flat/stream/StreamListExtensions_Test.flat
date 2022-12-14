@@ -81,6 +81,15 @@ testable class {
     expect(result).toBe(28)
   }
 
+  test `can get countBy value`() {
+    let array = ["one", "one", "three", "three", "three", "five", "six"]
+
+    let result = array.stream()
+      .countBy({ _.count == 3 })
+
+    expect(result).toBe(3)
+  }
+
   test `can get mean value`() {
     let array = ["one", "one", "three", "three", "three", "five", "six"]
 
