@@ -78,6 +78,9 @@ class<Type> {
   public firstWhere(func(Type) -> Bool) -> Type =>
     filter(func).first
 
+  public countWhere(func(Type) -> Bool) =>
+    filter(func).count
+
   public any(func(Type) -> Bool) =>
     filter(func).iterator.hasNext
 
@@ -168,9 +171,5 @@ class<Type> {
     if (count == 0) return 0
 
     return sum / count
-  }
-
-  public countBy(func(Type) -> Bool) -> Long {
-    return filter(func).count
   }
 }

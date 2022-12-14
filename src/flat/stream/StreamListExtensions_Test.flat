@@ -81,11 +81,11 @@ testable class {
     expect(result).toBe(28)
   }
 
-  test `can get countBy value`() {
+  test `can get countWhere value`() {
     let array = ["one", "one", "three", "three", "three", "five", "six"]
 
     let result = array.stream()
-      .countBy({ _.count == 3 })
+      .countWhere({ _.count == 3 })
 
     expect(result).toBe(3)
   }
