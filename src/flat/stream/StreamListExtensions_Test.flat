@@ -81,6 +81,15 @@ testable class {
     expect(result).toBe(28)
   }
 
+  test `can get mean value`() {
+    let array = ["one", "one", "three", "three", "three", "five", "six"]
+
+    let result = array.stream()
+      .meanBy({ _.count })
+
+    expect(result).toBe(4)
+  }
+
   test `can map then filter objects`() {
     let array = ["one", "to", "th", "333", "22", "five", "six"]
 

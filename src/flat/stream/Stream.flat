@@ -155,4 +155,18 @@ class<Type> {
 
     return sum
   }
+
+  public meanBy(func(Type) -> Double) -> Double {
+    var Double sum = 0
+    var Int count = 0
+
+    for (value in iterator) {
+      sum += func(value)
+      count++
+    }
+
+    if (count == 0) return 0
+
+    return sum / count
+  }
 }
