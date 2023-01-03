@@ -11,6 +11,12 @@
   "sources": {
     "main": {
       "source": "src",
+      "defaultExports": [
+        {
+          "location": "flat/stream/StreamListExtensions",
+          "static": true
+        }
+      ],
       "dependencies": {
         "github:FlatLang/System": "master",
         "github:FlatLang/IO": "master",
