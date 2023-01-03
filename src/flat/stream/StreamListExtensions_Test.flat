@@ -439,4 +439,22 @@ testable class {
       "six",
     ])
   }
+
+  async test `can join objects to String`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+
+    expect(array.stream().join(", ")).toBe("one, to, th, 333, 22, five, six")
+  }
+
+  async test `can join even number of objects with ellipses in the middle to String`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+
+    expect(array.stream().join(", ", 4)).toBe("one, to, ..., five, six")
+  }
+
+  async test `can join odd number of objects with ellipses in the middle to String`() {
+    let array = ["one", "to", "th", "333", "22", "five", "six"]
+
+    expect(array.stream().join(", ", 5)).toBe("one, to, ..., 22, five, six")
+  }
 }

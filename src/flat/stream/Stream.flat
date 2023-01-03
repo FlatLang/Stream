@@ -172,4 +172,45 @@ class<Type> {
 
     return sum / count
   }
+
+  public join(
+    String delimiter = "",
+    var Int maxOutputCount = -1,
+    Int ellipsePosition = maxOutputCount / 2,
+    String ellipse = "..."
+  ) -> String {
+    if (maxOutputCount == 0 && iterator.hasNext) return ellipse
+
+    var str = ""
+
+    if (maxOutputCount == -1) {
+      for (value in iterator) {
+        if (maxOutputCount == 0) return ellipse
+        if (str.isNotEmpty) str += delimiter
+
+        str += value
+      }
+    } else {
+      var Int i = 0
+      let buffer = String[]
+
+      for (value in iterator) {
+        if (i < ellipsePosition) {
+          str += value + delimiter
+        } else if (i == ellipsePosition) {
+          str += ellipse
+        } else {
+          buffer.add(value)
+        }
+
+        i++
+      }
+
+      for (var Int j = buffer.count - ellipsePosition - (maxOutputCount % 2); j < buffer.count; j++) {
+        str += delimiter + buffer[j]
+      }
+    }
+
+    return str
+  }
 }
