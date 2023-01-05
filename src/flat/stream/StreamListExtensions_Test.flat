@@ -165,17 +165,17 @@ testable class {
     let actions = String[]
 
     let result = array.stream()
-      .map((x) => {
-        actions.add("mapped #x")
-        return x + "!"
+      .map({
+        actions.add("mapped #_x")
+        return _x + "!"
       })
-      .filter((x) => {
-        actions.add("filtered #x")
-        return x.count == 3
+      .filter({
+        actions.add("filtered #_x")
+        return _x.count == 3
       })
-      .map((x) => {
-        actions.add("mapped2 #x")
-        return x + "!!"
+      .map({
+        actions.add("mapped2 #_x")
+        return _x + "!!"
       })
       .toArray()
 
@@ -223,13 +223,13 @@ testable class {
     let actions = String[]
 
     array.stream<Array>()
-      .flatMap((x) => {
-        actions.add("flatMapped #x")
-        return Array():addAll([x, x, x]).stream()
+      .flatMap({
+        actions.add("flatMapped #_x")
+        return Array():addAll([_x, _x, _x]).stream()
       })
-      .map((x) => {
-        actions.add("mapped #x")
-        return x
+      .map({
+        actions.add("mapped #_x")
+        return _x
       })
       .toArray()
 
