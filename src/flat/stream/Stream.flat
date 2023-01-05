@@ -48,22 +48,22 @@ class<Type> {
 
   public construct(visible Iterator<Type> iterator) {}
 
-  public map<Out>(mapFunc(Type) -> Out) =>
+  public map<Out>(mapFunc(Type x) -> Out) =>
     Stream<Out>(MapIterator<Type, Out>(iterator, mapFunc))
 
-  public mapNotNull<Out>(mapFunc(Type) -> Out) =>
+  public mapNotNull<Out>(mapFunc(Type x) -> Out) =>
     map(mapFunc).filter({ _ != null })
 
-  public peek(func(Type)) =>
+  public peek(func(Type x)) =>
     Stream<Out>(PeekIterator<Type, Out>(iterator, func))
 
-  public flatMap<Out>(mapFunc(Type) -> Stream<Out>) =>
+  public flatMap<Out>(mapFunc(Type x) -> Stream<Out>) =>
     Stream<Out>(FlatMapIterator<Type, Out>(iterator, mapFunc))
 
-  public filter(filterFunc(Type) -> Bool) =>
+  public filter(filterFunc(Type x) -> Bool) =>
     Stream<Type>(FilterIterator<Type>(iterator, filterFunc))
 
-  public filterNot(filterFunc(Type) -> Bool) =>
+  public filterNot(filterFunc(Type x) -> Bool) =>
     Stream<Type>(FilterNotIterator<Type>(iterator, filterFunc))
 
   public unique() =>
@@ -75,22 +75,22 @@ class<Type> {
   public take(Int count) =>
     Stream<Type>(TakeIterator<Type>(iterator, count))
 
-  public firstWhere(func(Type) -> Bool) -> Type =>
+  public firstWhere(func(Type x) -> Bool) -> Type =>
     filter(func).first
 
-  public countWhere(func(Type) -> Bool) =>
+  public countWhere(func(Type x) -> Bool) =>
     filter(func).count
 
-  public any(func(Type) -> Bool) =>
+  public any(func(Type x) -> Bool) =>
     filter(func).iterator.hasNext
 
-  public all(func(Type) -> Bool) =>
+  public all(func(Type x) -> Bool) =>
     !filterNot(func).iterator.hasNext
 
-  public none(func(Type) -> Bool) =>
+  public none(func(Type x) -> Bool) =>
     !filter(func).iterator.hasNext
 
-  public count(func(Type) -> Bool) =>
+  public count(func(Type x) -> Bool) =>
     filter(func).count
 
   public toArray() -> Type[] {
@@ -113,23 +113,23 @@ class<Type> {
     return set
   }
 
-  public forEach(func(Type)) {
+  public forEach(func(Type x)) {
     for (value in iterator) {
       func(value)
     }
   }
 
-  public async forEachParallel(async func(Type), Int maxParallel = -1) {
+  public async forEachParallel(async func(Type x), Int maxParallel = -1) {
     Async.all(toArray(), { func(_) }, maxParallel)
   }
 
-  public async forEachAsync(async func(Type)) {
+  public async forEachAsync(async func(Type x)) {
     for (value in iterator) {
       func(value)
     }
   }
 
-  public minBy(func(Type) -> Long) -> Long {
+  public minBy(func(Type x) -> Long) -> Long {
     var Long min = Long.MAX_VALUE
 
     for (value in iterator) {
@@ -139,7 +139,7 @@ class<Type> {
     return min
   }
 
-  public maxBy(func(Type) -> Long) -> Long {
+  public maxBy(func(Type x) -> Long) -> Long {
     var Long max = Long.MIN_VALUE
 
     for (value in iterator) {
@@ -149,7 +149,7 @@ class<Type> {
     return max
   }
 
-  public sumBy(func(Type) -> Long) -> Long {
+  public sumBy(func(Type x) -> Long) -> Long {
     var Long sum = 0
 
     for (value in iterator) {
@@ -159,7 +159,7 @@ class<Type> {
     return sum
   }
 
-  public meanBy(func(Type) -> Double) -> Double {
+  public meanBy(func(Type x) -> Double) -> Double {
     var Double sum = 0
     var Int count = 0
 
