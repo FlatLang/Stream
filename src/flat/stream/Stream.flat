@@ -119,8 +119,8 @@ class<Type> {
     }
   }
 
-  public async forEachParallel(async func(Type x), Int maxParallel = -1) {
-    Async.all(toArray(), { func(_) }, maxParallel)
+  public async forEachParallel(async func(Type x), Int maxParallel = -1, async onAfterChunk(Int count) = {}) {
+    Async.all(toArray(), { func(_) }, maxParallel, onAfterChunk)
   }
 
   public async forEachAsync(async func(Type x)) {
