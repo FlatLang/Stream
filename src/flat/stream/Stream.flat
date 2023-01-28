@@ -55,7 +55,7 @@ class<Type> {
     map(mapFunc).filter({ _ != null })
 
   public peek(func(Type x)) =>
-    Stream<Out>(PeekIterator<Type, Out>(iterator, func))
+    Stream<Out>(PeekIterator<Type>(iterator, func))
 
   public flatMap<Out>(mapFunc(Type x) -> Stream<Out>) =>
     Stream<Out>(FlatMapIterator<Type, Out>(iterator, mapFunc))
