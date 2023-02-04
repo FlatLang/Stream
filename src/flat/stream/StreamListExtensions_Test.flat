@@ -299,6 +299,18 @@ testable class {
     expect(nullArray.stream().firstNonNull).toBe(null)
   }
 
+  test `can get firstOr actual value`() {
+    let array = ["one", "two", "three"]
+
+    expect(array.stream().firstOr("hey")).toBe("one")
+  }
+
+  test `can get firstOr default value`() {
+    let emptyArray = Array()
+
+    expect(emptyArray.stream().firstOr("hey")).toBe("hey")
+  }
+
   test `can get last non null`() {
     let array = [null, "one", "three", null, null]
 

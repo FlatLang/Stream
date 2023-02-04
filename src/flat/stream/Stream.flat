@@ -78,6 +78,9 @@ class<Type> {
   public firstWhere(func(Type x) -> Bool) -> Type =>
     filter(func).first
 
+  public firstOr(Type default) -> Type =>
+    iterator.hasNext ? iterator.stepNext : default
+
   public countWhere(func(Type x) -> Bool) =>
     filter(func).count
 
