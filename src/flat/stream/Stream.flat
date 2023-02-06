@@ -209,7 +209,9 @@ class<Type> {
         i++
       }
 
-      for (var Int j = buffer.count - ellipsePosition - (maxOutputCount % 2); j < buffer.count; j++) {
+      let start = buffer.count - ellipsePosition - (maxOutputCount % 2)
+
+      for (j in start..buffer.count) {
         str += delimiter + buffer[j]
       }
     }
