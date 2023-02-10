@@ -2,7 +2,7 @@ package flat/stream
 
 import flat/datastruct/list
 
-class<In, Out> extends StreamIterator<Out> {
+class<In, Out> extends StreamIterator<In> {
   Array<mapFunc(In) -> Stream<Out>> funcs = Array()
 
   var Stream<Out> _next = null
@@ -25,7 +25,7 @@ class<In, Out> extends StreamIterator<Out> {
       else return false
     }
   }
-  visible Out stepNext {
+  visible In stepNext {
     get {
       let value = next
 
@@ -39,7 +39,7 @@ class<In, Out> extends StreamIterator<Out> {
       return value
     }
   }
-  visible Out next {
+  visible In next {
     get {
       if (_next) return _next.iterator.current
       while ((_next = mapNext()) && !_next.iterator.hasNext) {
@@ -51,5 +51,5 @@ class<In, Out> extends StreamIterator<Out> {
       return _next.iterator.stepNext
     }
   }
-  override visible Out current => iterator.current
+  override visible In current => iterator.current
 }
