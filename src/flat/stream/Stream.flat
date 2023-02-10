@@ -203,7 +203,7 @@ class<Type> {
         } else if (i == ellipsePosition) {
           str += ellipse
         } else {
-          buffer.add(value)
+          buffer.add(value.toString())
         }
 
         i++
