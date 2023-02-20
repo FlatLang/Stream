@@ -12,10 +12,7 @@ class<In, Out> extends StreamIterator<In> {
   }
 
   mapNext() -> Stream<Out> {
-    let value = funcs.map({ _(iterator.next) }).first
-    let v = (Object)value
-
-    return (Stream)v
+    return funcs.map({ _(iterator.next) }).first
   }
 
   visible Bool hasNext {
