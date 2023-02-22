@@ -5,7 +5,7 @@ import flat/datastruct/list
 class<In, Out> extends StreamIterator<In> {
   Array<mapFunc(In) -> Stream<Out>> funcs = Array()
 
-  var Stream<Out> _next = null
+  var Stream<In> _next = null
 
   public construct(Iterator<In> iterator, func(In) -> Stream<Out>) => super(iterator) {
     funcs.add(func)
