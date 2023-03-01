@@ -28,7 +28,9 @@
       "mainClass": "flat/stream/Stream_TestSuite",
       "source": "src/**/*_Test*.flat",
       "dependencies": {
-        "github:FlatLang/Test": "master"
+        "github:FlatLang/Test": "master",
+        "github:FlatLang/Thread": "master",
+        "github:FlatLang/Time": "master"
       }
     }
   }
