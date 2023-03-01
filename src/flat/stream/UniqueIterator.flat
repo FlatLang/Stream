@@ -3,7 +3,7 @@ package flat/stream
 import flat/datastruct
 import flat/datastruct/list
 
-class<Type> extends StreamIterator<Type> {
+class<Type> extends StreamIterator<Type, Type> {
   HashSet<Type> values = HashSet()
 
   public construct(Iterator<Type> iterator) => super(iterator) {

@@ -2,11 +2,11 @@ package flat/stream
 
 import flat/datastruct/list
 
-class<Type> implements Iterator<Type> {
-  public construct(visible Iterator<Type> iterator) {}
+class<In, Out> implements Iterator<Out> {
+  public construct(visible Iterator<In> iterator) {}
 
-  override visible Bool hasNext => iterator.hasNext
-  override visible Type stepNext => iterator.stepNext
-  override visible Type next => iterator.next
-  override visible Type current => iterator.current
+  override visible Bool hasNext => false
+  override visible Out stepNext => null
+  override visible Out next => null
+  override visible Out current => null
 }
