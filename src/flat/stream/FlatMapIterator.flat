@@ -24,34 +24,41 @@ class<In, Out> extends StreamIterator<In, Out> {
       else return false
     }
   }
+
   visible Out stepNext {
     get {
       let value = next
 
-      if (!_next.iterator.hasNext) {
+      if (!_next?.iterator.hasNext) {
         _next = null
         iterator.stepNext
-      } else {
-        _next.iterator.stepNext
+
+        return value
       }
+
+      _currentValue = _nextValue
+      _nextValue = _next.iterator.stepNext
 
       return value
     }
   }
+
   visible Out next {
     get {
       if (_next) return _nextValue
+
       while ((_next = mapNext()) && !_next.iterator.hasNext) {
         iterator.stepNext
-        if (!iterator.hasNext) {
-          return null
-        }
+
+        if (!iterator.hasNext) return null
       }
+
       _currentValue = _nextValue
       _nextValue = _next.iterator.stepNext
 
       return _nextValue
     }
   }
+
   override visible Out current => _currentValue
 }

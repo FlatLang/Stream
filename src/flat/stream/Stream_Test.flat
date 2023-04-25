@@ -204,15 +204,15 @@ testable class {
     let array = ["one", "two"]
 
     let result = array.stream()
-      .flatMap({ Array():addAll([_x, _x, _x]).stream() })
+      .flatMap({ Array():addAll([_x, "mid", _x]).stream() })
       .toArray()
 
     expect(result).toBe([
       "one",
-      "one",
+      "mid",
       "one",
       "two",
-      "two",
+      "mid",
       "two",
     ])
   }
