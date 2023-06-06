@@ -3,11 +3,11 @@ package flat/stream
 import flat/stream/StreamListExtensions
 
 testable class {
-  test `can convert array to stream`() {
-    let array = ["one", "two", "three"]
+    test `can convert array to stream`() {
+        let array = ["one", "two", "three"]
 
-    let stream = array.stream()
+        let stream = array.stream()
 
-    expect(stream).toNotBe(null)
-  }
+        expect(stream).toNotBe(null)
+    }
 }
