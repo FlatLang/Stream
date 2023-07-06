@@ -119,20 +119,42 @@ class<Type> {
         return set
     }
 
-    public forEach(func(Type x)) {
+    public forEach(func(Type x)) -> Int {
+        var Int count = 0
+
         for (value in iterator) {
             func(value)
+            count++
         }
+
+        return count
     }
 
-    public async forEachParallel(async func(Type x), Int maxParallel = -1, async onAfterChunk(Int count) = {}) {
-        Async.all(toArray(), { func(_) }, maxParallel, onAfterChunk)
+    public async forEachParallel(async func(Type x), Int maxParallel = -1, async onAfterChunk(Int count) = {}) -> Int {
+        var Int count = 0
+
+        Async.all(
+            toArray(),
+            {
+                func(_)
+                count++
+            },
+            maxParallel,
+            onAfterChunk
+        )
+
+        return count
     }
 
-    public async forEachAsync(async func(Type x)) {
+    public async forEachAsync(async func(Type x)) -> Int {
+        var Int count = 0
+
         for (value in iterator) {
             func(value)
+            count++
         }
+
+        return count
     }
 
     public minBy(func(Type x) -> Long) -> Long {
